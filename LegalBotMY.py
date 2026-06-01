@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-import random
 
 # Load environment variables from a .env file
 load_dotenv("app.env")
