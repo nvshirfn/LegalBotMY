@@ -691,7 +691,7 @@
         return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    function addMessage(text, sender) {
+    function addMessage(text, sender, isHtml = false) {
         const msg = document.createElement('div');
         msg.className = 'message ' + sender;
 
@@ -699,14 +699,19 @@
         const senderName = sender === 'user' ? 'You' : 'LegalBot Assistant';
         const icon = sender === 'user' ? 'fas fa-user' : 'fas fa-robot';
 
-        msg.innerHTML = `
-            <div class="message-header">
-                <strong><i class="${icon}"></i> ${senderName}</strong>
-                <span class="message-time">${time}</span>
-            </div>
-            ${text}
-        `;
+        const header = document.createElement('div');
+        header.className = 'message-header';
+        header.innerHTML = `<strong><i class="${icon}"></i> ${senderName}</strong><span class="message-time">${time}</span>`;
 
+        const body = document.createElement('div');
+        if (isHtml) {
+            body.innerHTML = text;
+        } else {
+            body.textContent = text;
+        }
+
+        msg.appendChild(header);
+        msg.appendChild(body);
         chatBox.appendChild(msg);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
@@ -765,10 +770,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    message: text,
-                    username: 'user'
-                })
+                body: JSON.stringify({ message: text })
             });
 
             if (!response.ok) {
@@ -870,7 +872,7 @@
         });
 
         exampleText += "<br>Click any question above to copy it to the input field.";
-        addMessage(exampleText, 'bot');
+        addMessage(exampleText, 'bot', true);
     }
 
     // Initialize with focus on input
