@@ -2,6 +2,8 @@
 
 An AI-powered chatbot that helps Malaysian citizens understand general legal information in simple, plain language.
 
+**Live demo:** [https://legalbotmy.onrender.com](https://legalbotmy.onrender.com)
+
 ## Features
 
 - Covers key areas of Malaysian law:
@@ -72,7 +74,7 @@ Then open your browser at `http://127.0.0.1:5000`.
 ## Project Structure
 
 ```
-Cikgu_Bot/
+LegalBotMY/
 ├── LegalBotMY.py           # Flask app and chatbot logic
 ├── requirements.txt        # Python dependencies
 ├── app.env                 # Environment variables (not committed)
