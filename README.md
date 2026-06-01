@@ -29,8 +29,8 @@ An AI-powered chatbot that helps Malaysian citizens understand general legal inf
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/Cikgu_Bot.git
-cd Cikgu_Bot
+git clone https://github.com/nvshirfn/LegalBotMY.git
+cd LegalBotMY
 ```
 
 ### 2. Create and activate a virtual environment
