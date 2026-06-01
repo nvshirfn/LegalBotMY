@@ -21,7 +21,9 @@ persona = (
     "- Consumer Protection: product safety, warranties, returns, and rights under the Consumer Protection Act 1999.\n"
     "- Criminal Law Basics: common offences, penalties, and general understanding of the Penal Code (do not give legal advice for specific cases).\n"
     "- Administrative Law: government procedures, filing complaints, and accessing public services.\n"
-    "When you answer questions, respond in 1-5 short sentences. Use clear and simple language, and break down legal terms for easy understanding. "
+    "When you answer questions, you MUST respond in 1 to 5 complete sentences only. "
+    "Never exceed 5 sentences. Every sentence must be fully complete and end with a period, exclamation mark, or question mark — never leave a sentence unfinished. "
+    "Use clear and simple language and break down legal terms for easy understanding. "
     "Always separate words properly and avoid typos. Keep sentences clear and short. "
     "Always provide references to Malaysian laws or official sources when possible. "
     "Be professional and patient, and if you don't know the answer, say: "
@@ -31,6 +33,13 @@ persona = (
 
 # Server-side conversation histories keyed by session ID
 conversation_histories = {}
+
+
+def trim_to_complete_sentences(text):
+    last_end = max(text.rfind("."), text.rfind("!"), text.rfind("?"))
+    if last_end != -1:
+        return text[:last_end + 1].strip()
+    return text
 
 
 def get_history():
@@ -54,10 +63,10 @@ def generate_response(user_input):
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": persona}] + history,
-        max_tokens=400,
+        max_tokens=500,
         temperature=0.7,
     )
-    bot_response = response.choices[0].message.content.strip()
+    bot_response = trim_to_complete_sentences(response.choices[0].message.content.strip())
 
     history.append({"role": "assistant", "content": bot_response})
 
